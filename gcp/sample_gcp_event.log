@@ -1,0 +1,22 @@
+
+Event ID: 1801245127512168
+Event type: google.storage.object.finalize
+
+
+events[bucket] w251_test_2
+events[contentType] video/mp4
+events[crc32c] ZxmmqA==
+events[etag] CO7N87feru0CEAE=
+events[generation] 1606892874688238
+events[id] w251_test_2/sample1_dup.mp4/1606892874688238
+events[kind] storage#object
+events[md5Hash] i9um7iSBIHcPpgFWGNiK+A==
+events[mediaLink] https://www.googleapis.com/download/storage/v1/b/w251_test_2/o/sample1_dup.mp4?generation=1606892874688238&alt=media
+events[metageneration] 1
+events[name] sample1_dup.mp4
+events[selfLink] https://www.googleapis.com/storage/v1/b/w251_test_2/o/sample1_dup.mp4
+events[size] 10040490
+events[storageClass] STANDARD
+events[timeCreated] 2020-12-02T07:07:54.687Z
+events[timeStorageClassUpdated] 2020-12-02T07:07:54.687Z
+events[updated] 2020-12-02T07:07:54.687Z

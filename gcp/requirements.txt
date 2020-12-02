@@ -1,0 +1,6 @@
+protobuf==3.14.0
+Pillow==8.0.1
+pandas==1.1.4
+numpy==1.18.5
+google-cloud-videointelligence==2.0.0
+google-cloud-automl==2.1.0

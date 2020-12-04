@@ -1,0 +1,13 @@
+version: "3.3"
+services:
+    client:
+        build: 
+            context: ./
+            dockerfile: Dockerfile
+        devices:
+            - "/dev/video0:/dev/video0"
+        environment:
+            MQTT_SERVER: #TODO
+            MQTT_PORT: 1883
+            MQTT_TOPIC: runmo
+            MQTT_QOS: 1

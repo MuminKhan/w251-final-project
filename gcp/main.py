@@ -6,7 +6,9 @@ from google.cloud import videointelligence_v1p3beta1 as videointelligence
 
 
 def detect_person(gcs_uri):
-    """Detects people in a video."""
+    """
+    Detects people in a video with Google Video Intelligence
+    """
 
     client = videointelligence.VideoIntelligenceServiceClient()
 
@@ -16,8 +18,7 @@ def detect_person(gcs_uri):
         include_attributes=True,
         include_pose_landmarks=True,
     )
-    context = videointelligence.types.VideoContext(
-        person_detection_config=config)
+    context = videointelligence.types.VideoContext(person_detection_config=config)
 
     # Start the asynchronous request
     operation = client.annotate_video(
@@ -36,6 +37,9 @@ def detect_person(gcs_uri):
 
 
 def analyze_person(person):
+    """
+    Converts Google VideoIntellegence object to timesteamp-keyed dict
+    """
     frames = []
     for track in person.tracks:
         # Convert timestamps to seconds
@@ -55,7 +59,8 @@ def analyze_person(person):
 
 
 def main(event, context):
-    """Google Function entrypoint
+    """
+    Google Cloud Function entrypoint
     """
     print('Event ID: {}'.format(context.event_id))
     print('Event type: {}'.format(context.event_type))
@@ -65,9 +70,9 @@ def main(event, context):
     result = detect_person(input_uri)
     people_annotations = result.annotation_results[0].person_detection_annotations
 
-    annotationsPd = pd.DataFrame(analyzePerson(people_annotations[0]))
+    annotationsPd = pd.DataFrame(analyze_person(people_annotations[0]))
     for annotation in people_annotations[1:]:
-        annotationsPd = annotationsPd.append(pd.DataFrame(analyzePerson(annotation)))
+        annotationsPd = annotationsPd.append(pd.DataFrame(analyze_person(annotation)))
 
     annotationsPd = annotationsPd.sort_values('timestamp', ascending=True)
 

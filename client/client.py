@@ -3,6 +3,7 @@ import argparse
 import numpy as np
 import paho.mqtt.publish as publish
 import sys
+import time
 
 from datetime import datetime
 from time import sleep
@@ -54,22 +55,31 @@ if __name__ == "__main__":
     # Define the codec and create VideoWriter object.The output is stored in 'outpy.avi' file.
     # TODO change filename, probably change format to mp4 too
     out = cv2.VideoWriter('outpy.avi',cv2.VideoWriter_fourcc('M','J','P','G'), 10, (frame_width,frame_height))
-
-    while(True):
+    
+    start_time =  time.time()
+    # Only run for 10 seconds
+    # TODO probably want to run for longer for demo, maybe 30
+    video_length = 10
+    last_time_left = -1
+    while(time.time() - start_time < video_length):
+        time_left = video_length - int(time.time() - start_time)
+        if time_left != last_time_left:
+            print("Approximate time left: " + str(time_left))
+            last_time_left = time_left
         # Capture frame-by-frame.
         ret, frame = video_capture.read()
 
         # Throw out the color information and get the gray frame.
         # TODO maybe have in color?
         # gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-        print("here1: " + str(ret))
+        # print("here1: " + str(ret))
         if ret == True:
             # Write the frame into the output file
             out.write(frame)
 
             # Display the resulting frame
             cv2.imshow('Frame', frame)
-            print("here2")
+            # print("here2")
 
             # Press Q on keyboard to stop recording
             if cv2.waitKey(1) & 0xFF == ord('q'):

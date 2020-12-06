@@ -1,7 +1,13 @@
 # https://cloud.google.com/storage/docs/reference/libraries
+import os
 from google.cloud import storage
 
 print("test output for GCP py file")
+
+# Set credentials https://stackoverflow.com/questions/45501082/set-google-application-credentials-in-python-project-to-use-google-api
+# JSON downloaded after clicking project here https://console.cloud.google.com/iam-admin/serviceaccounts
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"]="w-251-final-project.json"
+print("set Google credentials")
 
 def create_bucket(bucket_name):
     # Instantiates a client
@@ -33,5 +39,5 @@ def upload_blob(bucket_name, source_file_name, destination_blob_name):
 
 
 # TODO make this not hard-coded?
-create_bucket("test_bucket")
-upload_blob("test_bucket", "outpy.avi", "nx_output.avi")
+# create_bucket("test_bucket2")
+upload_blob("w251_test", "outpy.avi", "nx_output.avi")

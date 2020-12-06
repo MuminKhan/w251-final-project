@@ -14,6 +14,7 @@ RUN pip3 install --upgrade google-cloud-storage
 WORKDIR /client
 COPY client.py client.py
 COPY uploadToGCP.py uploadToGCP.py
+COPY w-251-final-project.json w-251-final-project.json
 
 ENV MQTT_SERVER="mqtt"
 ENV MQTT_PORT=1883

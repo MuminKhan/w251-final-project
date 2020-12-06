@@ -221,6 +221,24 @@ def analyze_person(person):
     sorted(frames, key=lambda x: x['timestamp'])
     return frames
 
+def upload_blob(bucket_name, source_file_name, destination_blob_name):
+    """Uploads a file to the bucket."""
+    # bucket_name = "your-bucket-name"
+    # source_file_name = "local/path/to/file"
+    # destination_blob_name = "storage-object-name"
+
+    storage_client = storage.Client()
+    bucket = storage_client.bucket(bucket_name)
+    blob = bucket.blob(destination_blob_name)
+
+    blob.upload_from_filename(source_file_name)
+
+    print(
+        "File {} uploaded to {}.".format(
+            source_file_name, destination_blob_name
+        )
+    )
+
 
 def main(event, context):
     """
@@ -253,4 +271,11 @@ def main(event, context):
     annotationsPd['ideal_stride'] = annotationsPd.apply(computeIdealStrideLength, axis=1)
     annotationsPd['is_good_posture'] = annotationsPd.apply(isGoodPosture, axis=1)
 
-    return annotationsPd
+    # TODO is Excel the right format?
+    file_to_write = 'is_good_posture.xlsx'
+    # Convert to Excel
+    # TODO maybe just convert the is_good_posture column?
+    excel_to_write = annotationsPd.to_excel(file_to_write)
+
+    upload_blob("w251_test", file_to_write, file_to_write)
+

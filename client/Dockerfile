@@ -9,6 +9,7 @@ RUN apt update && \
             python3-opencv \
             python3-numpy 
 RUN pip3 install --no-cache-dir paho-mqtt
+RUN pip3 install --upgrade google-cloud-storage
 
 WORKDIR /client
 COPY client.py client.py

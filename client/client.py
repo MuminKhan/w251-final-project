@@ -81,7 +81,7 @@ if __name__ == "__main__":
             cv2.imshow('Frame', frame)
             # print("here2")
 
-            # Press Q on keyboard to stop recording
+            # stops when you press the 'Q' key
             if cv2.waitKey(1) & 0xFF == ord('q'):
                 break
 

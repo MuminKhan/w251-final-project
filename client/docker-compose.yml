@@ -7,7 +7,7 @@ services:
         devices:
             - "/dev/video0:/dev/video0"
         environment:
-            MQTT_SERVER: #TODO
+            MQTT_SERVER: 34.69.233.96
             MQTT_PORT: 1883
             MQTT_TOPIC: runmo
             MQTT_QOS: 1

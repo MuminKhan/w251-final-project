@@ -44,8 +44,6 @@ if __name__ == "__main__":
 
     print(args)
 
-    #TODO: Add video capture and publishing here
-
     # Default resolutions of the frame are obtained.The default resolutions are system dependent.
     # We convert the resolutions from float to integer.
     frame_width = int(video_capture.get(3))
@@ -69,10 +67,6 @@ if __name__ == "__main__":
         # Capture frame-by-frame.
         ret, frame = video_capture.read()
 
-        # Throw out the color information and get the gray frame.
-        # TODO maybe have in color?
-        # gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-        # print("here1: " + str(ret))
         if ret == True:
             # Write the frame into the output file
             out.write(frame)
@@ -84,7 +78,6 @@ if __name__ == "__main__":
             # stops when you press the 'Q' key
             if cv2.waitKey(1) & 0xFF == ord('q'):
                 break
-
 
         # Break the loop
         else:

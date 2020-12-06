@@ -39,5 +39,4 @@ def upload_blob(bucket_name, source_file_name, destination_blob_name):
 
 
 # TODO make this not hard-coded?
-# create_bucket("test_bucket2")
 upload_blob("w251_test", "outpy.avi", "nx_output.avi")

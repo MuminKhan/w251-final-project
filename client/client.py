@@ -79,17 +79,14 @@ if __name__ == "__main__":
             last_time_left = time_left
 
         # Capture frame-by-frame.
-        ret, frame = video_capture.read()
+        return_val, frame = video_capture.read()
+        if return_val is None or not return_val:
+            break
+        out.write(frame)
+        cv2.imshow('Frame', frame)
 
-        if ret == True:
-            out.write(frame)
-            cv2.imshow('Frame', frame)
-
-            # stops when you press the 'Q' key
-            if cv2.waitKey(1) & 0xFF == ord('q'):
-                break
-
-        else:
+        # stops when you press the 'Q' key
+        if cv2.waitKey(1) & 0xFF == ord('q'):
             break
 
     video_capture.release()

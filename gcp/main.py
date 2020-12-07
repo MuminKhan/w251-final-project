@@ -1,8 +1,12 @@
 import datetime
+import math
 from time import sleep
 
 import pandas as pd
 from google.cloud import videointelligence_v1p3beta1 as videointelligence
+from google.cloud import storage
+
+from trig import *
 
 
 def detect_person(gcs_uri):
@@ -18,7 +22,8 @@ def detect_person(gcs_uri):
         include_attributes=True,
         include_pose_landmarks=True,
     )
-    context = videointelligence.types.VideoContext(person_detection_config=config)
+    context = videointelligence.types.VideoContext(
+        person_detection_config=config)
 
     # Start the asynchronous request
     operation = client.annotate_video(
@@ -54,8 +59,25 @@ def analyze_person(person):
                 frame[landmark.name + '_y'] = 1 - landmark.point.y
 
             frames.append(frame)
+            
     sorted(frames, key=lambda x: x['timestamp'])
     return frames
+
+
+def upload_blob(bucket_name, source_file_name, destination_blob_name):
+    """Uploads a file to the bucket."""
+    # bucket_name = "your-bucket-name"
+    # source_file_name = "local/path/to/file"
+    # destination_blob_name = "storage-object-name"
+
+    storage_client = storage.Client()
+    bucket = storage_client.bucket(bucket_name)
+    blob = bucket.blob(destination_blob_name)
+
+    blob.upload_from_filename(source_file_name)
+
+    print("File {} uploaded to {}.".format(
+        source_file_name, destination_blob_name))
 
 
 def main(event, context):
@@ -76,4 +98,19 @@ def main(event, context):
 
     annotationsPd = annotationsPd.sort_values('timestamp', ascending=True)
 
-    return annotationsPd
+    annotationsPd['right_elbow_angle'] = annotationsPd.apply(computeRightElbowAngle, axis=1)
+    annotationsPd['right_shoulder_angle'] = annotationsPd.apply(computeRightShoulderAngle, axis=1)
+    annotationsPd['right_knee_angle'] = annotationsPd.apply(computeRightKneeAngle, axis=1)
+
+    annotationsPd['left_elbow_angle'] = annotationsPd.apply(computeLeftElbowAngle, axis=1)
+    annotationsPd['left_shoulder_angle'] = annotationsPd.apply(computeLeftShoulderAngle, axis=1)
+    annotationsPd['left_knee_angle'] = annotationsPd.apply(computeLeftKneeAngle, axis=1)
+
+    annotationsPd['back_angle'] = annotationsPd.apply(computeBackAngle, axis=1)
+    annotationsPd['stride_length'] = annotationsPd.apply(computeStrideLength, axis=1)
+    annotationsPd['ideal_stride'] = annotationsPd.apply(computeIdealStrideLength, axis=1)
+    annotationsPd['is_good_posture'] = annotationsPd.apply(isGoodPosture, axis=1)
+
+    file_to_write = 'is_good_posture.xlsx'
+    excel_to_write = annotationsPd.to_excel(file_to_write)
+    upload_blob("w251_test", excel_to_write, file_to_write)

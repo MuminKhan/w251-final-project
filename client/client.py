@@ -75,7 +75,7 @@ if __name__ == "__main__":
         time_left = video_length - int(time.time() - start_time)
 
         if time_left != last_time_left:
-            print("Approximate time left: " + str(time_left))
+            print("Approximate time left: " + str(time_left) + " seconds")
             last_time_left = time_left
 
         # Capture frame-by-frame.

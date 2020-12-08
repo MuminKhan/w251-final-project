@@ -9,9 +9,8 @@ def parse_arguments():
     parser = argparse.ArgumentParser()
 
     # Video Args
-    parser.add_argument('upload_obj',
+    parser.add_argument('--upload_obj',
                         action='store',
-                        required=True,
                         dest='UPLOAD_OBJ',
                         default='outpy.avi')
     parser.add_argument('--destination', '--destination_path', '-d',
@@ -24,8 +23,8 @@ def parse_arguments():
                         default='w251_test')
 
     arguments = parser.parse_args()
-    arguments.MQTT_PORT = int(arguments.MQTT_PORT)
-    arguments.MQTT_QOS = int(arguments.MQTT_QOS)
+    # arguments.MQTT_PORT = int(arguments.MQTT_PORT)
+    # arguments.MQTT_QOS = int(arguments.MQTT_QOS)
 
     print("Supplied args:")
     [print(k, v) for k, v in arguments.__dict__.items()]
@@ -64,6 +63,9 @@ if __name__ == "__main__":
     # Set credentials https://stackoverflow.com/questions/45501082/set-google-application-credentials-in-python-project-to-use-google-api
     # JSON downloaded after clicking project here https://console.cloud.google.com/iam-admin/serviceaccounts
     os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "w-251-final-project.json"
-    
+    print("Upload credentials set")
+
     args = parse_arguments()
+    print("Upload started")
     upload_blob(args.BUCKET_NAME, args.UPLOAD_OBJ, args.DESTINATION_PATH)
+    print("Upload finished")

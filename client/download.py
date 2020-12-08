@@ -11,11 +11,11 @@ def parse_arguments():
     parser.add_argument('--download_obj',
                         action='store',
                         dest='DOWNLOAD_OBJ',
-                        default='is_good_posture.xlsx')
+                        default='is_good_posture.csv')
     parser.add_argument('--destination', '--destination_path', '-d',
                         action='store',
                         dest='DESTINATION_PATH',
-                        default=f'{datetime.now().strftime("%m_%d_%Y-%H_%M_%S")}.avi')
+                        default=f'{datetime.now().strftime("%m_%d_%Y-%H_%M_%S")}.xlsx')
     parser.add_argument('--bucket', '--bucket_name', '-b',
                         action='store',
                         dest='BUCKET_NAME',
@@ -57,6 +57,8 @@ if __name__ == "__main__":
 
     args = parse_arguments()
     print("Download started")
-    download_blob(args.BUCKET_NAME, args.DOWNLOAD_OBJ, args.DESTINATION_PATH)
+    # TODO temporary hardcoded download path so I can download to host more easily
+    # download_blob(args.BUCKET_NAME, args.DOWNLOAD_OBJ, args.DESTINATION_PATH)
+    download_blob(args.BUCKET_NAME, args.DOWNLOAD_OBJ, 'is_good_posture.csv')
     print("Download finished")
 

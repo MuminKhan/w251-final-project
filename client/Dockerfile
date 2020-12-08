@@ -23,4 +23,5 @@ ENV MQTT_TOPIC="runmo"
 ENV MQTT_QOS=0
 
 CMD ["sh", "-c", \
-    "python3 -u client.py -s $MQTT_SERVER -p $MQTT_PORT -t $MQTT_TOPIC -q $MQTT_QOS && python3 -u upload_to_gcp.py && python3 -u download.py"]
+    "python3 -u client.py -s $MQTT_SERVER -p $MQTT_PORT -t $MQTT_TOPIC -q $MQTT_QOS && python3 -u upload_to_gcp.py &&  python3 -u download.py && cat is_good_posture.csv"]
+

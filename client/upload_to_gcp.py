@@ -16,7 +16,7 @@ def parse_arguments():
     parser.add_argument('--destination', '--destination_path', '-d',
                         action='store',
                         dest='DESTINATION_PATH',
-                        default=f'{datetime.now().strftime("%m_%d_%Y-%H_%M_%S")}.avi')
+                        default=f'{datetime.now().strftime("%m_%d_%Y-%H_%M_%S")}.xlsx')
     parser.add_argument('--bucket', '--bucket_name', '-b',
                         action='store',
                         dest='BUCKET_NAME',
@@ -67,5 +67,7 @@ if __name__ == "__main__":
 
     args = parse_arguments()
     print("Upload started")
+
     upload_blob(args.BUCKET_NAME, args.UPLOAD_OBJ, args.DESTINATION_PATH)
+
     print("Upload finished")

@@ -111,6 +111,6 @@ def main(event, context):
     annotationsPd['ideal_stride'] = annotationsPd.apply(computeIdealStrideLength, axis=1)
     annotationsPd['is_good_posture'] = annotationsPd.apply(isGoodPosture, axis=1)
 
-    file_to_write = 'is_good_posture.xlsx'
-    excel_to_write = annotationsPd.to_excel(file_to_write)
-    upload_blob("w251_test", excel_to_write, file_to_write)
+    file_to_write = 'is_good_posture.csv'
+    csv_to_write = annotationsPd.to_csv(file_to_write)
+    upload_blob("w251_test", csv_to_write, file_to_write)
